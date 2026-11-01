@@ -1,0 +1,149 @@
+{
+	"name": "df_bronce_demanda_paradas",
+	"properties": {
+		"folder": {
+			"name": "bronce"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "bronce_demanda_paradas_cvs",
+						"type": "DatasetReference"
+					},
+					"name": "csv"
+				},
+				{
+					"dataset": {
+						"referenceName": "bronce_demanda_paradas_2022_xls",
+						"type": "DatasetReference"
+					},
+					"name": "xls"
+				},
+				{
+					"dataset": {
+						"referenceName": "bronce_demanda_paradas_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sql"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "df_demanva_paradardas_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "union2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          fec_servicio as string,",
+				"          cod_ruta as string,",
+				"          nro_parada as string,",
+				"          franja as string,",
+				"          abordajes_manuales as string,",
+				"          descensos_manuales as string,",
+				"          demanda_no_atendida as string,",
+				"          medicion as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> csv",
+				"source(output(",
+				"          fecha_servicio as string,",
+				"          cod_ruta as string,",
+				"          nro_parada as string,",
+				"          franja as string,",
+				"          estimacion_abordajes as string,",
+				"          estimacion_descensos as string,",
+				"          demanda_no_atendida as string,",
+				"          metodo as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> xls",
+				"source(output(",
+				"          AnioFuente as integer,",
+				"          DemandaId as string,",
+				"          FechaServicio as date,",
+				"          RutaHistoricaId as string,",
+				"          ParadaHistoricaId as string,",
+				"          Franja as string,",
+				"          ValidacionesTarjeta as integer,",
+				"          Descensos as integer,",
+				"          DemandaNoAtendida as integer,",
+				"          Metodo as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> sql",
+				"csv select(mapColumn(",
+				"          FechaServicio = fec_servicio,",
+				"          RutaHistoricaId = cod_ruta,",
+				"          ParadaHistoricaId = nro_parada,",
+				"          Franja = franja,",
+				"          ValidacionesTarjeta = abordajes_manuales,",
+				"          Descuentos = descensos_manuales,",
+				"          DemandaNoAtendida = demanda_no_atendida,",
+				"          Metodo = medicion",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"xls select(mapColumn(",
+				"          FechaServicio = fecha_servicio,",
+				"          RutaHistoricaId = cod_ruta,",
+				"          ParadaHistoricoId = nro_parada,",
+				"          Franja = franja,",
+				"          ValidacionesTarjeta = estimacion_abordajes,",
+				"          Descuentos = estimacion_descensos,",
+				"          DemandaNoAtendida = demanda_no_atendida,",
+				"          Metodo = metodo",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select1, sql union(byName: true)~> union1",
+				"union1, select2 union(byName: true)~> union2",
+				"union2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          AnioFuente as string,",
+				"          DemandaId as string,",
+				"          FechaServicio as string,",
+				"          RutaHistoricaId as string,",
+				"          ParadaHistoricaId as string,",
+				"          Franja as string,",
+				"          ValidacionesTarjeta as string,",
+				"          Descensos as string,",
+				"          DemandaNoAtendida as string,",
+				"          Metodo as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
