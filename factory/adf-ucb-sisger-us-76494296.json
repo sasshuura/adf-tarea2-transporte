@@ -1,0 +1,10 @@
+{
+	"name": "adf-ucb-sisger-us-76494296",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus"
+}
