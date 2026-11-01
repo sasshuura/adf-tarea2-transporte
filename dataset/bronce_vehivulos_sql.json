@@ -1,0 +1,54 @@
+{
+	"name": "bronce_vehivulos_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQL_ERP_TRANSPORTE_764942196",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "bronce/sql"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "AnioFuente",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "VehiculoId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Placa",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TipoVehiculo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CapacidadEfectiva",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "VigenciaDesde",
+				"type": "date"
+			},
+			{
+				"name": "VigenciaHasta",
+				"type": "date"
+			},
+			{
+				"name": "Estado",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "VehiculosAzure"
+		}
+	}
+}
