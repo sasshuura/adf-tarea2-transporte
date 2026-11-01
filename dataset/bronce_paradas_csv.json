@@ -1,0 +1,59 @@
+{
+	"name": "bronce_paradas_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SA_TRANSPORTE_76494296",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "bronce/csv"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "paradas.csv",
+				"fileSystem": "raw-csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "nro_parada",
+				"type": "String"
+			},
+			{
+				"name": "nombre_parada",
+				"type": "String"
+			},
+			{
+				"name": "zona",
+				"type": "String"
+			},
+			{
+				"name": "latitud",
+				"type": "String"
+			},
+			{
+				"name": "longitud",
+				"type": "String"
+			},
+			{
+				"name": "fecha_desde",
+				"type": "String"
+			},
+			{
+				"name": "fecha_hasta",
+				"type": "String"
+			},
+			{
+				"name": "estado",
+				"type": "String"
+			}
+		]
+	}
+}
