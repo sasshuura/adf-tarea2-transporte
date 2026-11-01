@@ -1,0 +1,17 @@
+{
+	"name": "sql_ddw_transporte_76494296",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "sql-ucb-sisger-76494296.database.windows.net",
+			"database": "dw_transporte",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "franklin",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDUwRUExM0I3LUJGQTMtNDE0RC1BOEQ1LTVBOEQ2Mzk0OUNENF80N2UwZjNmZS1hNmY3LTQ0YmItYTVjOS03MjEyYzA0NWM0ZWUiDQp9"
+		}
+	}
+}
